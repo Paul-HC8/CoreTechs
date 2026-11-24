@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>core techs — portfolio</title>
+
+  <!-- Load Geist and Geist Mono with swap behavior -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Subtle halftone dot texture in the top-right corner -->
+  <div class="halftone-backdrop" aria-hidden="true"></div>
+
+  <!-- MOBILE TOP BAR (Visible below 1024px) -->
+  <header class="mobile-header">
+    <button class="logo-btn" id="mobileLogoBtn" aria-label="Return to Home">CT</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu" aria-expanded="false">
+      MENU
+    </button>
+  </header>
+
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR (Fixed 14rem on desktop, overlay on mobile) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <!-- Clickable CT Logo that returns to Home -->
+        <button class="logo-btn desktop-logo" id="logoBtn" aria-label="Return to Home">
+          CT
+        </button>
+        <span class="micro-label">CORE TECHS // PORTFOLIO</span>
+      </div>
+
+      <hr class="hairline" />
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" aria-label="Main Navigation">
+        <button class="nav-btn active" data-tab="home">
+          <span class="nav-arrow" aria-hidden="true">→</span> home
+        </button>
+        <button class="nav-btn" data-tab="projects">
+          <span class="nav-arrow" aria-hidden="true">→</span> projects
+        </button>
+        <button class="nav-btn" data-tab="activities">
+          <span class="nav-arrow" aria-hidden="true">→</span> activities
+        </button>
+        <button class="nav-btn" data-tab="about">
+          <span class="nav-arrow" aria-hidden="true">→</span> about me
+        </button>
+      </nav>
+
+      <hr class="hairline" />
+
+      <!-- Theme Switcher: Light / Dark / System -->
+      <div class="theme-group">
+        <span class="micro-label">APPEARANCE</span>
+        <div class="theme-controls" role="group" aria-label="Color theme">
+          <button class="theme-btn" data-theme-choice="light">light</button>
+          <button class="theme-btn" data-theme-choice="dark">dark</button>
+          <button class="theme-btn" data-theme-choice="system">system</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT COLUMN -->
+    <main class="main-content">
+
+      <!-- 1. HOME TAB -->
+      <section id="home" class="tab-section active">
+        <header class="hero stagger-1">
+          <div class="section-marker">01 — home</div>
+          <h1 class="display-title">core techs</h1>
+
+          <div class="badge-row">
+            <!-- Single inverted chip for highest emphasis -->
+            <span class="chip-inverted">ENVIRONMENTAL ADVOCACY</span>
+            <span class="chip-outline">PROGRESS HUB</span>
+          </div>
+
+          <p class="site-description">
+            Welcome to Core Techs—my interactive portfolio and progress log. 
+            Here, I document the software projects I build, share my coding journey, 
+            and advocate for sustainable, mindful technology.
+          </p>
+        </header>
+
+        <hr class="hairline section-divider stagger-2" />
+
+        <!-- GITHUB ISLAND CARD -->
+        <article class="card github-island stagger-3">
+          <div class="island-header">
+            <div>
+              <span class="micro-label">OPEN SOURCE // LIVE</span>
+              <h2 class="card-title">github contributions</h2>
+            </div>
+            <a id="githubLink" href="https://github.com" target="_blank" rel="noopener noreferrer" class="mono-link">
+              VIEW PROFILE <span class="arrow-ext">↗</span>
+            </a>
+          </div>
+
+          <div class="contribution-wrapper">
+            <img
+              id="githubChart"
+              src=""
+              alt="GitHub Contributions Chart"
+              class="contribution-chart"
+            />
+          </div>
+        </article>
+      </section>
+
+      <!-- 2. PROJECTS TAB -->
+      <section id="projects" class="tab-section">
+        <div class="section-marker stagger-1">02 — projects</div>
+        <h1 class="display-title stagger-1">projects</h1>
+        <p class="site-description stagger-2">
+          Your featured software and environmental projects will live here in our next update.
+        </p>
+      </section>
+
+      <!-- 3. ACTIVITIES TAB -->
+      <section id="activities" class="tab-section">
+        <div class="section-marker stagger-1">03 — activities</div>
+        <h1 class="display-title stagger-1">activities</h1>
+        <p class="site-description stagger-2">
+          Your environmental advocacy milestones and progress timeline will live here.
+        </p>
+      </section>
+
+      <!-- 4. ABOUT ME TAB -->
+      <section id="about" class="tab-section">
+        <div class="section-marker stagger-1">04 — about me</div>
+        <h1 class="display-title stagger-1">about me</h1>
+        <p class="site-description stagger-2">
+          Your bio, technical skills, and sustainability mission statement will live here.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
