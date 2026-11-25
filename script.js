@@ -3,7 +3,7 @@
 // =========================================
 
 // 1. Replace "torvalds" with your own GitHub username
-const GITHUB_USERNAME = "PH-HC8";
+const GITHUB_USERNAME = "Paul-HC8";
 
 // 2. How often the quote rotates (in milliseconds).
 //    Default: 1 hour = 60 minutes * 60 seconds * 1000 ms
