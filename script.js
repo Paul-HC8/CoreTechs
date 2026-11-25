@@ -2,7 +2,7 @@
 // CONFIGURATION (Adjustable settings)
 // =========================================
 
-// 1. Change to your own GitHub username
+// 1. Replace "torvalds" with your own GitHub username
 const GITHUB_USERNAME = "torvalds";
 
 // 2. How often the quote rotates (in milliseconds).
@@ -20,15 +20,86 @@ const INSPIRATIONAL_QUOTES = [
 ];
 
 // =========================================
-// 1. GITHUB ISLAND SETUP
+// 1. GITHUB CONTRIBUTIONS CONSTELLATION (SHINING STARS)
 // =========================================
 const githubLink = document.getElementById("githubLink");
 const githubChart = document.getElementById("githubChart");
 
 githubLink.href = `https://github.com/${GITHUB_USERNAME}`;
-// Use a dark gray hex (#404040) so the chart stays monochrome
-githubChart.src = `https://ghchart.rshah.org/404040/${GITHUB_USERNAME}`;
-githubChart.alt = `${GITHUB_USERNAME}'s GitHub Contributions Chart`;
+
+// Helper function to create one star cell referencing #star-icon in index.html
+function createStarCell(level, titleText = "") {
+  const cell = document.createElement("div");
+  cell.className = `contrib-day level-${level}`;
+
+  if (titleText) {
+    cell.title = titleText;
+  } else {
+    cell.setAttribute("aria-hidden", "true");
+  }
+
+  cell.innerHTML = `<svg class="star-svg" aria-hidden="true"><use href="#star-icon"></use></svg>`;
+  return cell;
+}
+
+async function loadGitHubContributions() {
+  if (!githubChart) return;
+
+  const apiUrl = `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(
+    GITHUB_USERNAME
+  )}?y=last`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
+    const data = await response.json();
+    const contributions = Array.isArray(data.contributions) ? data.contributions : [];
+
+    if (!contributions.length) {
+      githubChart.innerHTML = `<span class="micro-label">NO CONTRIBUTION DATA FOUND</span>`;
+      return;
+    }
+
+    // Build all stars in memory first for fast rendering
+    const fragment = document.createDocumentFragment();
+
+    // Align the first date to its proper weekday row (0 = Sunday ... 6 = Saturday)
+    const firstDate = new Date(`${contributions[0].date}T00:00:00Z`);
+    const leadingDays = firstDate.getUTCDay();
+
+    for (let i = 0; i < leadingDays; i++) {
+      fragment.appendChild(createStarCell(0));
+    }
+
+    // Create one star per day; higher levels scale up and shine brighter
+    contributions.forEach((day) => {
+      const level = day.count > 0 ? Math.min(Math.max(day.level || 1, 1), 4) : 0;
+      const countText =
+        day.count === 0
+          ? "No contributions"
+          : day.count === 1
+          ? "1 contribution"
+          : `${day.count} contributions`;
+
+      fragment.appendChild(createStarCell(level, `${day.date}: ${countText}`));
+    });
+
+    githubChart.innerHTML = "";
+    githubChart.appendChild(fragment);
+    githubChart.setAttribute(
+      "aria-label",
+      `${GITHUB_USERNAME}'s GitHub Contributions Star Constellation`
+    );
+  } catch (error) {
+    console.error("Failed to load GitHub contributions:", error);
+    githubChart.innerHTML = `<span class="micro-label">UNABLE TO LOAD CONTRIBUTIONS FOR ${GITHUB_USERNAME.toUpperCase()}</span>`;
+  }
+}
+
+loadGitHubContributions();
 
 // =========================================
 // 2. HOURLY INSPIRATIONAL QUOTE FOOTER
