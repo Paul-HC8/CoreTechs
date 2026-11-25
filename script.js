@@ -3,7 +3,7 @@
 // =========================================
 
 // 1. Replace "torvalds" with your own GitHub username
-const GITHUB_USERNAME = "Paul-HC8";
+const GITHUB_USERNAME = "torvalds";
 
 // 2. How often the quote rotates (in milliseconds).
 //    Default: 1 hour = 60 minutes * 60 seconds * 1000 ms
@@ -27,7 +27,7 @@ const githubChart = document.getElementById("githubChart");
 
 githubLink.href = `https://github.com/${GITHUB_USERNAME}`;
 
-// Helper function to create one star cell referencing #star-icon in index.html
+// Helper to create one self-contained 4-point SVG star cell
 function createStarCell(level, titleText = "") {
   const cell = document.createElement("div");
   cell.className = `contrib-day level-${level}`;
@@ -38,7 +38,11 @@ function createStarCell(level, titleText = "") {
     cell.setAttribute("aria-hidden", "true");
   }
 
-  cell.innerHTML = `<svg class="star-svg" aria-hidden="true"><use href="#star-icon"></use></svg>`;
+  cell.innerHTML = `
+    <svg class="star-svg" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 1 L14.6 9.4 L23 12 L14.6 14.6 L12 23 L9.4 14.6 L1 12 L9.4 9.4 Z" />
+    </svg>
+  `;
   return cell;
 }
 
@@ -59,7 +63,7 @@ async function loadGitHubContributions() {
     const contributions = Array.isArray(data.contributions) ? data.contributions : [];
 
     if (!contributions.length) {
-      githubChart.innerHTML = `<span class="micro-label">NO CONTRIBUTION DATA FOUND</span>`;
+      githubChart.innerHTML = `<span class="micro-label">NO CONTRIBUTION DATA FOUND FOR ${GITHUB_USERNAME.toUpperCase()}</span>`;
       return;
     }
 
@@ -95,7 +99,7 @@ async function loadGitHubContributions() {
     );
   } catch (error) {
     console.error("Failed to load GitHub contributions:", error);
-    githubChart.innerHTML = `<span class="micro-label">UNABLE TO LOAD CONTRIBUTIONS FOR ${GITHUB_USERNAME.toUpperCase()}</span>`;
+    githubChart.innerHTML = `<span class="micro-label">UNABLE TO LOAD CONTRIBUTIONS FOR ${GITHUB_USERNAME.toUpperCase()} — CHECK USERNAME OR CONNECTION</span>`;
   }
 }
 
