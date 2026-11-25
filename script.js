@@ -3,38 +3,97 @@
 // =========================================
 
 // 1. Replace "torvalds" with your own GitHub username
-const GITHUB_USERNAME = "torvalds";
+const GITHUB_USERNAME = "PH-HC8";
 
-// 2. GitHub contribution square color (hex without "#").
-//    - Keep "404040" for monochrome gray squares
-//    - Set to "" (empty string) to use GitHub's classic green squares
-const GITHUB_CHART_COLOR = "404040";
-
-// 3. How often the quote rotates (in milliseconds).
+// 2. How often the quote rotates (in milliseconds).
 //    Default: 1 hour = 60 minutes * 60 seconds * 1000 ms
 const ROTATION_INTERVAL_MS = 60 * 60 * 1000;
 
-// 4. Inspirational Quotes List
+// 3. Inspirational Quotes List
 //    Add, edit, or remove quotes inside [ ... ] anytime.
 //    Put a comma (,) at the end of every quote EXCEPT the very last one.
 const INSPIRATIONAL_QUOTES = [
   "Life is a gift",
   "Are u living a meaningful life",
   "Praise be to you, My lord",
-  'Laudato si "Sustainability"'
+  'Laudato si'
 ];
 
 // =========================================
-// 1. GITHUB ISLAND SETUP
+// 1. GITHUB CONTRIBUTIONS GRID (BLANK ZERO DAYS)
 // =========================================
 const githubLink = document.getElementById("githubLink");
 const githubChart = document.getElementById("githubChart");
 
 githubLink.href = `https://github.com/${GITHUB_USERNAME}`;
-githubChart.src = GITHUB_CHART_COLOR
-  ? `https://ghchart.rshah.org/${GITHUB_CHART_COLOR}/${GITHUB_USERNAME}`
-  : `https://ghchart.rshah.org/${GITHUB_USERNAME}`;
-githubChart.alt = `${GITHUB_USERNAME}'s GitHub Contributions Chart`;
+
+async function loadGitHubContributions() {
+  if (!githubChart) return;
+
+  const apiUrl = `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(
+    GITHUB_USERNAME
+  )}?y=last`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
+    const data = await response.json();
+    const contributions = Array.isArray(data.contributions) ? data.contributions : [];
+
+    if (!contributions.length) {
+      githubChart.innerHTML = `<span class="micro-label">NO CONTRIBUTION DATA FOUND</span>`;
+      return;
+    }
+
+    // Build all squares in memory first for smooth performance
+    const fragment = document.createDocumentFragment();
+
+    // Align the very first date to its proper weekday row (0 = Sunday ... 6 = Saturday)
+    const firstDate = new Date(`${contributions[0].date}T00:00:00Z`);
+    const leadingBlankDays = firstDate.getUTCDay();
+
+    for (let i = 0; i < leadingBlankDays; i++) {
+      const spacer = document.createElement("div");
+      spacer.className = "contrib-day level-0";
+      spacer.setAttribute("aria-hidden", "true");
+      fragment.appendChild(spacer);
+    }
+
+    // Create one square per day; 0-contribution days get "level-0" (blank)
+    contributions.forEach((day) => {
+      const cell = document.createElement("div");
+      const level = day.count > 0 ? Math.min(Math.max(day.level || 1, 1), 4) : 0;
+
+      cell.className = `contrib-day level-${level}`;
+
+      // Tooltip shown when hovering over a day
+      const countText =
+        day.count === 0
+          ? "No contributions"
+          : day.count === 1
+          ? "1 contribution"
+          : `${day.count} contributions`;
+      cell.title = `${day.date}: ${countText}`;
+
+      fragment.appendChild(cell);
+    });
+
+    githubChart.innerHTML = "";
+    githubChart.appendChild(fragment);
+    githubChart.setAttribute(
+      "aria-label",
+      `${GITHUB_USERNAME}'s GitHub Contributions over the last year`
+    );
+  } catch (error) {
+    console.error("Failed to load GitHub contributions:", error);
+    githubChart.innerHTML = `<span class="micro-label">UNABLE TO LOAD CONTRIBUTIONS FOR ${GITHUB_USERNAME.toUpperCase()}</span>`;
+  }
+}
+
+loadGitHubContributions();
 
 // =========================================
 // 2. HOURLY INSPIRATIONAL QUOTE FOOTER

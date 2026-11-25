@@ -92,7 +92,7 @@
 
         <hr class="hairline section-divider stagger-2" />
 
-        <!-- GITHUB CONTRIBUTIONS ISLAND (Retained design) -->
+        <!-- GITHUB CONTRIBUTIONS ISLAND (Blank spaces for 0-contribution days) -->
         <article class="card github-island stagger-3">
           <div class="island-header">
             <div>
@@ -105,16 +105,18 @@
           </div>
 
           <div class="contribution-wrapper">
-            <img
+            <div
               id="githubChart"
-              src=""
-              alt="GitHub Contributions Chart"
-              class="contribution-chart"
-            />
+              class="contribution-grid"
+              role="img"
+              aria-label="GitHub Contributions Chart"
+            >
+              <span class="micro-label">LOADING CONTRIBUTIONS...</span>
+            </div>
           </div>
         </article>
 
-        <!-- HOURLY INSPIRATIONAL QUOTE FOOTER (Minimal, no island/labels/counter) -->
+        <!-- HOURLY INSPIRATIONAL QUOTE FOOTER (Centered & Larger) -->
         <footer class="quote-footer stagger-4" aria-live="polite">
           <blockquote id="quoteDisplay" class="quote-footer-text">
             “Life is a gift”
