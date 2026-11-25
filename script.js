@@ -5,11 +5,16 @@
 // 1. Replace "torvalds" with your own GitHub username
 const GITHUB_USERNAME = "torvalds";
 
-// 2. How often the quote rotates (in milliseconds).
+// 2. GitHub contribution square color (hex without "#").
+//    - Keep "404040" for monochrome gray squares
+//    - Set to "" (empty string) to use GitHub's classic green squares
+const GITHUB_CHART_COLOR = "404040";
+
+// 3. How often the quote rotates (in milliseconds).
 //    Default: 1 hour = 60 minutes * 60 seconds * 1000 ms
 const ROTATION_INTERVAL_MS = 60 * 60 * 1000;
 
-// 3. Inspirational Quotes List
+// 4. Inspirational Quotes List
 //    Add, edit, or remove quotes inside [ ... ] anytime.
 //    Put a comma (,) at the end of every quote EXCEPT the very last one.
 const INSPIRATIONAL_QUOTES = [
@@ -26,32 +31,30 @@ const githubLink = document.getElementById("githubLink");
 const githubChart = document.getElementById("githubChart");
 
 githubLink.href = `https://github.com/${GITHUB_USERNAME}`;
-githubChart.src = `https://ghchart.rshah.org/404040/${GITHUB_USERNAME}`;
+githubChart.src = GITHUB_CHART_COLOR
+  ? `https://ghchart.rshah.org/${GITHUB_CHART_COLOR}/${GITHUB_USERNAME}`
+  : `https://ghchart.rshah.org/${GITHUB_USERNAME}`;
 githubChart.alt = `${GITHUB_USERNAME}'s GitHub Contributions Chart`;
 
 // =========================================
-// 2. HOURLY INSPIRATIONAL QUOTE ROTATION
+// 2. HOURLY INSPIRATIONAL QUOTE FOOTER
 // =========================================
 const quoteDisplay = document.getElementById("quoteDisplay");
-const quoteCounter = document.getElementById("quoteCounter");
 
 function updateHourlyQuote() {
-  if (!Array.isArray(INSPIRATIONAL_QUOTES) || !INSPIRATIONAL_QUOTES.length) return;
+  if (!quoteDisplay || !Array.isArray(INSPIRATIONAL_QUOTES) || !INSPIRATIONAL_QUOTES.length) {
+    return;
+  }
 
   // Count total hours elapsed since Jan 1, 1970, then use modulo (%)
   // to cycle cleanly through your quotes list once per hour.
   const currentTimeBlock = Math.floor(Date.now() / ROTATION_INTERVAL_MS);
   const quoteIndex = currentTimeBlock % INSPIRATIONAL_QUOTES.length;
 
-  // Format index and total as two digits (e.g., "01 / 04")
-  const formattedIndex = String(quoteIndex + 1).padStart(2, "0");
-  const formattedTotal = String(INSPIRATIONAL_QUOTES.length).padStart(2, "0");
-
   // Smoothly fade text out, swap quote, and fade back in
   quoteDisplay.style.opacity = "0";
   setTimeout(() => {
     quoteDisplay.textContent = `“${INSPIRATIONAL_QUOTES[quoteIndex]}”`;
-    quoteCounter.textContent = `${formattedIndex} / ${formattedTotal}`;
     quoteDisplay.style.opacity = "1";
   }, 150);
 }
