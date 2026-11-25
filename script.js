@@ -1,7 +1,23 @@
 // =========================================
-// CONFIGURATION (Change to your GitHub username!)
+// CONFIGURATION (Adjustable settings)
 // =========================================
-const GITHUB_USERNAME = "Paul-HC8";
+
+// 1. Replace "torvalds" with your own GitHub username
+const GITHUB_USERNAME = "torvalds";
+
+// 2. How often the quote rotates (in milliseconds).
+//    Default: 1 hour = 60 minutes * 60 seconds * 1000 ms
+const ROTATION_INTERVAL_MS = 60 * 60 * 1000;
+
+// 3. Inspirational Quotes List
+//    Add, edit, or remove quotes inside [ ... ] anytime.
+//    Put a comma (,) at the end of every quote EXCEPT the very last one.
+const INSPIRATIONAL_QUOTES = [
+  "Life is a gift",
+  "Are u living a meaningful life",
+  "Praise be to you, My lord",
+  'Laudato si "Sustainability"'
+];
 
 // =========================================
 // 1. GITHUB ISLAND SETUP
@@ -14,7 +30,50 @@ githubChart.src = `https://ghchart.rshah.org/404040/${GITHUB_USERNAME}`;
 githubChart.alt = `${GITHUB_USERNAME}'s GitHub Contributions Chart`;
 
 // =========================================
-// 2. TAB SWITCHING & MOBILE MENU
+// 2. HOURLY INSPIRATIONAL QUOTE ROTATION
+// =========================================
+const quoteDisplay = document.getElementById("quoteDisplay");
+const quoteCounter = document.getElementById("quoteCounter");
+
+function updateHourlyQuote() {
+  if (!Array.isArray(INSPIRATIONAL_QUOTES) || !INSPIRATIONAL_QUOTES.length) return;
+
+  // Count total hours elapsed since Jan 1, 1970, then use modulo (%)
+  // to cycle cleanly through your quotes list once per hour.
+  const currentTimeBlock = Math.floor(Date.now() / ROTATION_INTERVAL_MS);
+  const quoteIndex = currentTimeBlock % INSPIRATIONAL_QUOTES.length;
+
+  // Format index and total as two digits (e.g., "01 / 04")
+  const formattedIndex = String(quoteIndex + 1).padStart(2, "0");
+  const formattedTotal = String(INSPIRATIONAL_QUOTES.length).padStart(2, "0");
+
+  // Smoothly fade text out, swap quote, and fade back in
+  quoteDisplay.style.opacity = "0";
+  setTimeout(() => {
+    quoteDisplay.textContent = `“${INSPIRATIONAL_QUOTES[quoteIndex]}”`;
+    quoteCounter.textContent = `${formattedIndex} / ${formattedTotal}`;
+    quoteDisplay.style.opacity = "1";
+  }, 150);
+}
+
+function scheduleHourlyQuoteUpdate() {
+  // Show the right quote immediately on page load
+  updateHourlyQuote();
+
+  // Calculate milliseconds left until the exact top of the next hour
+  const msUntilNextRotation = ROTATION_INTERVAL_MS - (Date.now() % ROTATION_INTERVAL_MS);
+
+  // Wait for the next hour mark, then rotate automatically every hour
+  setTimeout(() => {
+    updateHourlyQuote();
+    setInterval(updateHourlyQuote, ROTATION_INTERVAL_MS);
+  }, msUntilNextRotation);
+}
+
+scheduleHourlyQuoteUpdate();
+
+// =========================================
+// 3. TAB SWITCHING & MOBILE MENU
 // =========================================
 const navButtons = document.querySelectorAll(".nav-btn");
 const tabSections = document.querySelectorAll(".tab-section");
@@ -67,7 +126,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 // =========================================
-// 3. LIGHT / DARK / SYSTEM THEME SWITCHER
+// 4. LIGHT / DARK / SYSTEM THEME SWITCHER
 // =========================================
 const themeButtons = document.querySelectorAll(".theme-btn");
 const systemDarkQuery = window.matchMedia("(prefers-color-scheme: dark)");

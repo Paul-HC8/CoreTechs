@@ -12,16 +12,13 @@
   --gray-400: #a3a3a3;
   --gray-500: #737373;
 
-  /* Halftone dot color & card shadow */
   --dot-color: rgba(10, 10, 10, 0.22);
   --shadow-card: 0 8px 22px -14px rgba(0, 0, 0, 0.25);
   --shadow-card-hover: 0 18px 36px -20px rgba(0, 0, 0, 0.40);
 
-  /* Typography */
   --font-sans: "Geist", system-ui, -apple-system, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Motion curve */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -65,7 +62,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Slim 6px scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -129,7 +125,6 @@ body {
   gap: 0.75rem;
 }
 
-/* Inverted CT Logo */
 .logo-btn {
   width: 40px;
   height: 40px;
@@ -156,7 +151,6 @@ body {
   transition: border-color 500ms ease;
 }
 
-/* Navigation Tabs */
 .nav-tabs {
   display: flex;
   flex-direction: column;
@@ -198,7 +192,6 @@ body {
   transform: translateX(0);
 }
 
-/* Theme Switcher */
 .theme-group {
   margin-top: auto;
   display: flex;
@@ -313,7 +306,7 @@ body {
 }
 
 /* =========================================
-   6. CARDS & GITHUB ISLAND
+   6. CARDS, GITHUB ISLAND & QUOTE ISLAND
    ========================================= */
 .card {
   background: linear-gradient(180deg, var(--gray-50) 0%, var(--bg) 100%);
@@ -392,6 +385,46 @@ body {
   filter: grayscale(1) invert(1) hue-rotate(180deg) brightness(0.95);
 }
 
+/* Hourly Quote Card */
+.quote-island {
+  margin-top: 1.5rem;
+}
+
+.quote-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+}
+
+.status-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--ink);
+  animation: pulseDot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.quote-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+  color: var(--ink);
+  transition: opacity 300ms ease;
+}
+
 /* =========================================
    7. STAGGERED ENTRANCE MOTION
    ========================================= */
@@ -414,6 +447,9 @@ body {
 }
 .tab-section.active .stagger-3 {
   animation: fadeUp 700ms var(--ease-out) 190ms both;
+}
+.tab-section.active .stagger-4 {
+  animation: fadeUp 700ms var(--ease-out) 260ms both;
 }
 
 @media (prefers-reduced-motion: reduce) {
