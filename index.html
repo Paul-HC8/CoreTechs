@@ -137,9 +137,38 @@
       <section id="activities" class="tab-section">
         <div class="section-marker stagger-1">03 — activities</div>
         <h1 class="display-title stagger-1">activities</h1>
-        <p class="site-description stagger-2">
-          Your environmental advocacy milestones and progress timeline will live here.
-        </p>
+        <p class="site-description stagger-2">Choose an activity to explore. Your games and interactive experiments will appear here.</p>
+
+        <div class="activity-console stagger-3">
+          <div class="activity-console-top">
+            <span class="micro-label">ACTIVITY SELECT // 01 AVAILABLE</span>
+            <span class="activity-status"><span class="status-dot"></span> SELECT A GAME</span>
+          </div>
+          <div class="activity-library" aria-label="Activity library">
+            <button class="activity-tile selected" type="button" aria-pressed="true">
+              <span class="activity-art" aria-hidden="true"><span class="art-orbit"></span><span class="art-person">●</span><span class="art-rope"></span><span class="art-ground"></span></span>
+              <span class="activity-tile-info"><span class="activity-number">01 / GAME</span><span class="activity-name">Swinging Game</span><span class="activity-tag">AVAILABLE NOW</span></span>
+            </button>
+            <div class="activity-tile activity-tile-empty" aria-label="More activities coming soon">
+              <span class="empty-plus" aria-hidden="true">＋</span><span class="activity-number">NEW ACTIVITY</span><span class="empty-caption">Coming soon</span>
+            </div>
+            <div class="activity-tile activity-tile-empty" aria-label="More activities coming soon">
+              <span class="empty-plus" aria-hidden="true">＋</span><span class="activity-number">NEW ACTIVITY</span><span class="empty-caption">Coming soon</span>
+            </div>
+          </div>
+          <div class="activity-preview">
+            <div class="preview-copy"><span class="micro-label">SELECTED ACTIVITY // 01</span><h2>Swinging Game</h2><p>Swing through the skyline, dodge hazards, and see how far you can go.</p></div>
+            <button class="launch-button" id="launchSwingingGame" type="button">PLAY GAME <span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="activity-console-footer"><span>← → BROWSE ACTIVITIES</span><span>CORE TECHS // PLAY</span></div>
+        </div>
+        <div class="game-player" id="swingingGamePlayer" hidden>
+          <div class="game-player-toolbar">
+            <span class="micro-label">NOW PLAYING // SWINGING GAME</span>
+            <button class="back-to-activities" id="backToActivities" type="button">← BACK TO ACTIVITIES</button>
+          </div>
+          <iframe class="game-frame" id="swingingGameFrame" data-src="activities/swinging-game/index.html" title="Swinging Game" allow="fullscreen" loading="lazy"></iframe>
+        </div>
       </section>
 
       <!-- 4. ABOUT ME TAB -->
@@ -158,3 +187,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
+
+

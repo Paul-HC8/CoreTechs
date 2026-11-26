@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b35">
+  <title>Skyline Swing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Skyline Swing home"><span class="brand-mark">↗</span> SKYLINE <b>SWING</b></a>
+      <div class="top-actions"><button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">THEME · NIGHT</button><div class="top-note"><span class="live-dot"></span> ENDLESS RUN</div></div>
+    </header>
+    <section class="intro">
+      <div class="eyebrow">A LITTLE AIRTIME GOES A LONG WAY</div>
+      <h1>Catch the rhythm.<br><span>Clear the skyline.</span></h1>
+      <p>Swing through the city, thread the gaps, and see how far you can go.</p>
+    </section>
+    <section class="stage-wrap" aria-label="Game area">
+      <div class="hud"><div class="score-box"><span class="hud-label">DISTANCE</span><strong id="score">000</strong></div><div class="best-box"><span class="hud-label">PERSONAL BEST</span><strong id="best">000</strong></div></div>
+      <canvas id="game" width="960" height="540" aria-label="Skyline Swing game"></canvas>
+      <div class="overlay" id="overlay">
+        <div class="panel">
+          <div class="panel-icon" id="panel-icon">✦</div>
+          <div class="panel-kicker" id="panel-kicker">PICK YOUR RUNNER</div>
+          <h2 id="panel-title">Who’s taking<br>the leap?</h2>
+          <p id="panel-copy">Choose a character, then swing through the skyline.</p>
+          <div class="character-picker" id="character-picker" role="radiogroup" aria-label="Choose your character">
+            <button class="character-option" type="button" data-character="Raf" role="radio" aria-checked="false"><img src="assets/raf.png" alt=""><span>Raf</span></button>
+            <button class="character-option" type="button" data-character="Macoy" role="radio" aria-checked="false"><img src="assets/macoy.png" alt=""><span>Macoy</span></button>
+            <button class="character-option" type="button" data-character="Pol" role="radio" aria-checked="false"><img src="assets/pol.png" alt=""><span>Pol</span></button>
+            <button class="character-option" type="button" data-character="Lance" role="radio" aria-checked="false"><img src="assets/lance.png" alt=""><span>Lance</span></button>
+            <button class="character-option selected" type="button" data-character="Stickman" role="radio" aria-checked="true"><span class="stickman-preview">○</span><span>Stickman</span></button>
+          </div>
+          <button id="play-button">START RUN <span>→</span></button>
+          <button class="change-character" id="choose-again" type="button" hidden>CHANGE CHARACTER</button>
+        </div>
+      </div>
+      <div class="toast" id="toast" aria-live="polite"></div>
+    </section>
+    <footer><div class="controls"><span class="keycap">HOLD</span><span class="keycap">CLICK / SPACE</span><span>to swing · release to let go</span></div><div class="tip">Birds join the skyline after 10 points.</div></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

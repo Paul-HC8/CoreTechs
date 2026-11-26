@@ -232,3 +232,29 @@ systemDarkQuery.addEventListener("change", () => {
     applyTheme("system");
   }
 });
+
+// =========================================
+// 5. SWINGING GAME ACTIVITY VIEW
+// =========================================
+const launchSwingingGame = document.getElementById("launchSwingingGame");
+const backToActivities = document.getElementById("backToActivities");
+const swingingGamePlayer = document.getElementById("swingingGamePlayer");
+const swingingGameFrame = document.getElementById("swingingGameFrame");
+const activityConsole = document.querySelector(".activity-console");
+
+launchSwingingGame?.addEventListener("click", () => {
+  if (swingingGameFrame.getAttribute("src") !== swingingGameFrame.dataset.src) {
+    swingingGameFrame.src = swingingGameFrame.dataset.src;
+  }
+  activityConsole.hidden = true;
+  swingingGamePlayer.hidden = false;
+  backToActivities.focus();
+});
+
+backToActivities?.addEventListener("click", () => {
+  swingingGameFrame.removeAttribute("src");
+  swingingGamePlayer.hidden = true;
+  activityConsole.hidden = false;
+  launchSwingingGame.focus();
+});
+
